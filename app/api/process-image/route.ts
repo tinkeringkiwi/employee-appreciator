@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // Replace this URL with your partner's backend endpoint
     const BACKEND_URL =
-      process.env.BACKEND_URL || 'http://localhost:8000/api/process'
+      process.env.BACKEND_URL || 'http://localhost:8081/api/appreciate'
 
     // Forward the image to your partner's backend
     const backendResponse = await fetch(BACKEND_URL, {
@@ -24,10 +24,12 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ postData }),
+      body: JSON.stringify(postData),
     })
 
     const backendData = await backendResponse.json()
+
+    console.log(backendData)
 
     if (!backendResponse.ok) {
       return NextResponse.json(
@@ -39,7 +41,7 @@ export async function POST(request: NextRequest) {
     // Return the backend's response to the frontend
     return NextResponse.json({
       success: true,
-      data: backendData,
+      certificate: `data:image/jpeg;base64,${backendData.image_b64}`,
     })
   } catch (error) {
     console.error('API Error:', error)
