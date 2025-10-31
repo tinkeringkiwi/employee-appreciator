@@ -2,13 +2,19 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('API route is being triggered')
+
     const { image } = await request.json()
 
     if (!image) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 })
     }
 
-    // TODO: Replace this URL with your partner's backend endpoint
+    const postData = {
+      employee_image: image,
+    }
+
+    // Replace this URL with your partner's backend endpoint
     const BACKEND_URL =
       process.env.BACKEND_URL || 'http://localhost:8000/api/process'
 
@@ -18,7 +24,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ image }),
+      body: JSON.stringify({ postData }),
     })
 
     const backendData = await backendResponse.json()

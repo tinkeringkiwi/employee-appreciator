@@ -1,21 +1,17 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Camera, RotateCcw, Send, Video, VideoOff } from 'lucide-react'
+import { Camera } from 'lucide-react'
+import Image from 'next/image'
 
 export default function WebcamCapture() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isCameraOn, setIsCameraOn] = useState(false)
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
+  const [generatedCertificate, setGeneratedCertificate] = useState<
+    string | null
+  >(null)
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -26,7 +22,7 @@ export default function WebcamCapture() {
           facingMode: 'user',
           width: { ideal: 720 },
           height: { ideal: 900 },
-          aspectRatio: { ideal: 4 / 5 }, // Portrait ratio
+          aspectRatio: { ideal: 4 / 5 },
         },
       })
 
@@ -87,8 +83,8 @@ export default function WebcamCapture() {
       const data = await response.json()
 
       if (response.ok) {
-        setMessage('Certificate generated successfully! 🎉')
-        console.log('Backend response:', data)
+        setGeneratedCertificate(data.certificate)
+        setMessage('Certificate generated successfully!')
       } else {
         setMessage('Error: ' + (data.error || 'Failed to process'))
       }
@@ -102,144 +98,286 @@ export default function WebcamCapture() {
 
   const retakePhoto = () => {
     setCapturedImage(null)
+    setGeneratedCertificate(null)
     setMessage('')
     startCamera()
   }
 
+  const downloadCertificate = () => {
+    if (generatedCertificate) {
+      const link = document.createElement('a')
+      link.href = generatedCertificate
+      link.download = 'employee-of-the-month.png'
+      link.click()
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-400 via-yellow-300 to-red-400 p-4 flex items-center justify-center">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 text-6xl opacity-80 animate-bounce">
-          🍔
-        </div>
-        <div className="absolute top-40 right-20 text-6xl opacity-80 animate-bounce delay-100">
-          🍟
-        </div>
-        <div className="absolute bottom-20 left-20 text-6xl opacity-80 animate-bounce delay-200">
-          🥤
-        </div>
-        <div className="absolute bottom-40 right-40 text-6xl opacity-80 animate-bounce delay-300">
-          ⭐
+    <div className="min-h-screen bg-linear-to-b from-blue-100 via-gray-100 to-blue-50 p-4">
+      {/* Classic 2000s header bar */}
+      <div className="bg-linear-to-r from-blue-800 to-blue-600 text-white py-2 px-4 mb-4 shadow-md border-b-4 border-yellow-400">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-yellow-400 text-blue-900 font-black px-3 py-1 text-xl border-2 border-yellow-500 shadow-sm">
+              ★
+            </div>
+            <h1
+              className="text-2xl font-bold"
+              style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
+            >
+              FastFood Employee Recognition Portal™
+            </h1>
+          </div>
+          <div className="text-xs bg-blue-900 px-3 py-1 rounded border border-blue-400">
+            v2.0.1 Beta
+          </div>
         </div>
       </div>
 
-      <Card className="w-full max-w-2xl shadow-2xl border-4 border-yellow-400 relative z-10 overflow-hidden py-0">
-        <CardHeader className="bg-red-600 text-white text-center space-y-2 py-6">
-          <CardTitle className="text-4xl font-black tracking-tight">
-            EMPLOYEE APPRECIATOR©
-          </CardTitle>
-          <CardDescription className="text-yellow-100 text-lg font-semibold">
-            Generate Your Official Employee of the Month Certificate
-          </CardDescription>
-        </CardHeader>
+      <div className="max-w-6xl mx-auto">
+        {/* Navbar */}
+        <div className="bg-gray-200 border-2 border-gray-400 mb-4 shadow-sm">
+          <div className="flex text-sm font-semibold">
+            <div className="bg-white border-r-2 border-gray-400 px-4 py-2 text-blue-700">
+              Home
+            </div>
+            <div className="border-r-2 border-gray-400 px-4 py-2 hover:bg-gray-300 cursor-pointer">
+              My Certificates
+            </div>
+            <div className="border-r-2 border-gray-400 px-4 py-2 hover:bg-gray-300 cursor-pointer">
+              Gallery
+            </div>
+            <div className="border-r-2 border-gray-400 px-4 py-2 hover:bg-gray-300 cursor-pointer">
+              Help
+            </div>
+            <div className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
+              About
+            </div>
+          </div>
+        </div>
 
-        <CardContent className="px-6 pb-6 space-y-6">
-          {/* Camera/Image Display */}
-          <div className="relative rounded-lg overflow-hidden border-4 border-yellow-400 shadow-lg bg-black">
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              className={`w-full ${isCameraOn ? 'block' : 'hidden'}`}
-            />
+        <div className="grid grid-cols-12 gap-4">
+          {/* Left Sidebar */}
+          <div className="col-span-3 space-y-4">
+            <div className="bg-white border-2 border-gray-400 shadow-md">
+              <div className="bg-linear-to-b from-blue-700 to-blue-600 text-white px-3 py-2 font-bold text-sm border-b-2 border-blue-800">
+                Quick Links
+              </div>
+              <div className="p-3 space-y-1 text-sm">
+                <div className="text-blue-700 hover:underline cursor-pointer flex items-center gap-2">
+                  <span className="text-xs">▸</span> New Certificate
+                </div>
+                <div className="text-blue-700 hover:underline cursor-pointer flex items-center gap-2">
+                  <span className="text-xs">▸</span> View History
+                </div>
+                <div className="text-blue-700 hover:underline cursor-pointer flex items-center gap-2">
+                  <span className="text-xs">▸</span> Print Queue
+                </div>
+                <div className="text-blue-700 hover:underline cursor-pointer flex items-center gap-2">
+                  <span className="text-xs">▸</span> Settings
+                </div>
+              </div>
+            </div>
 
-            {capturedImage && (
-              <img src={capturedImage} alt="Captured" className="w-full" />
-            )}
+            <div className="bg-yellow-50 border-2 border-yellow-400 shadow-md p-3">
+              <div className="font-bold text-sm text-yellow-800 mb-2">
+                ⚠️ Notice
+              </div>
+              <div className="text-xs text-gray-700">
+                This system is for authorized personnel only. Misuse may result
+                in disciplinary action.
+              </div>
+            </div>
 
-            {!isCameraOn && !capturedImage && (
-              <div className="aspect-video flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                <Camera className="w-16 h-16 text-yellow-400 mb-4" />
-                <p className="text-yellow-100 font-semibold">
-                  Ready for your close-up?
+            <div className="bg-white border-2 border-gray-400 shadow-md p-3">
+              <div className="font-bold text-sm text-gray-700 mb-2">
+                Did You Know?
+              </div>
+              <div className="text-xs text-gray-600">
+                Over 50,000 certificates generated since 2002!
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="col-span-9">
+            <div className="bg-white border-2 border-gray-400 shadow-lg">
+              <div className="bg-linear-to-b from-gray-300 to-gray-200 px-4 py-3 border-b-2 border-gray-400">
+                <h2 className="text-xl font-bold text-gray-800">
+                  Employee Recognition Certificate Generator
+                </h2>
+                <p className="text-xs text-gray-600 mt-1">
+                  Create your official Employee of the Month certificate
                 </p>
               </div>
-            )}
-          </div>
 
-          <canvas ref={canvasRef} className="hidden" />
+              <div className="p-6 space-y-4">
+                {/* Camera/Image Display */}
+                <fieldset className="border-2 border-gray-400 p-4">
+                  <legend className="text-sm font-bold text-gray-700 px-2">
+                    Step 1: Capture Photo
+                  </legend>
 
-          {/* Action Buttons */}
-          <div className="space-y-3">
-            {!isCameraOn && !capturedImage && (
-              <Button
-                onClick={startCamera}
-                size="lg"
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-lg h-14 shadow-lg"
-              >
-                <Video className="mr-2 h-5 w-5" />
-                Start Camera
-              </Button>
-            )}
+                  <div className="relative border-2 border-gray-500 bg-black max-h-[500px] overflow-hidden">
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      className={`w-full ${isCameraOn ? 'block' : 'hidden'}`}
+                    />
 
-            {isCameraOn && (
-              <div className="flex gap-3">
-                <Button
-                  onClick={capturePhoto}
-                  size="lg"
-                  className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-red-900 font-bold text-lg h-14 shadow-lg"
-                >
-                  <Camera className="mr-2 h-5 w-5" />
-                  Capture Photo
-                </Button>
-                <Button
-                  onClick={stopCamera}
-                  size="lg"
-                  variant="destructive"
-                  className="h-14 shadow-lg"
-                >
-                  <VideoOff className="h-5 w-5" />
-                </Button>
+                    {capturedImage && (
+                      <img
+                        src={capturedImage}
+                        alt="Captured"
+                        className="w-full"
+                      />
+                    )}
+
+                    {!isCameraOn && !capturedImage && (
+                      <div className="aspect-4/5 flex flex-col items-center justify-center bg-linear-to-br from-gray-700 to-gray-900">
+                        <Camera className="w-16 h-16 text-gray-400 mb-4" />
+                        <p className="text-gray-300 text-sm font-bold">
+                          Camera Inactive
+                        </p>
+                        <p className="text-gray-500 text-xs mt-1">
+                          Click &quot;Start Camera&quot; below
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  <canvas ref={canvasRef} className="hidden" />
+
+                  {/* Action Buttons */}
+                  <div className="mt-4 space-y-2">
+                    {!isCameraOn && !capturedImage && (
+                      <button
+                        onClick={startCamera}
+                        className="w-full bg-linear-to-b from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 px-4 border-2 border-green-700 shadow-md text-sm"
+                      >
+                        ▶ Start Camera
+                      </button>
+                    )}
+
+                    {isCameraOn && (
+                      <div className="flex gap-2">
+                        <button
+                          onClick={capturePhoto}
+                          className="flex-1 bg-linear-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2 px-4 border-2 border-blue-700 shadow-md text-sm"
+                        >
+                          📷 Capture Photo
+                        </button>
+                        <button
+                          onClick={stopCamera}
+                          className="bg-linear-to-b from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-2 px-4 border-2 border-red-700 shadow-md text-sm"
+                        >
+                          ■ Stop
+                        </button>
+                      </div>
+                    )}
+
+                    {capturedImage && !generatedCertificate && (
+                      <div className="flex gap-2">
+                        <button
+                          onClick={sendToBackend}
+                          disabled={isLoading}
+                          className="flex-1 bg-linear-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-2 px-4 border-2 border-orange-700 disabled:border-gray-600 shadow-md text-sm"
+                        >
+                          {isLoading
+                            ? '⌛ Processing...'
+                            : '⚡ Generate Certificate'}
+                        </button>
+                        <button
+                          onClick={retakePhoto}
+                          className="bg-linear-to-b from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-4 border-2 border-gray-700 shadow-md text-sm"
+                        >
+                          ↻ Retake
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </fieldset>
+
+                {/* Status Message */}
+                {message && (
+                  <div
+                    className={`border-2 p-3 text-sm font-semibold ${
+                      message.includes('Error') || message.includes('Failed')
+                        ? 'bg-red-50 border-red-500 text-red-800'
+                        : 'bg-green-50 border-green-500 text-green-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span>
+                        {message.includes('Error') || message.includes('Failed')
+                          ? '❌'
+                          : '✓'}
+                      </span>
+                      <span>{message}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Generated Certificate Display */}
+                {generatedCertificate && (
+                  <fieldset className="border-2 border-gray-400 p-4">
+                    <legend className="text-sm font-bold text-gray-700 px-2">
+                      Step 2: Your Certificate
+                    </legend>
+
+                    <div className="border-2 border-gray-500 mb-3">
+                      <img
+                        src={generatedCertificate}
+                        alt="Generated Certificate"
+                        className="w-full"
+                      />
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={downloadCertificate}
+                        className="flex-1 bg-linear-to-b from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-2 px-4 border-2 border-purple-700 shadow-md text-sm"
+                      >
+                        💾 Download Certificate
+                      </button>
+                      <button
+                        onClick={retakePhoto}
+                        className="bg-linear-to-b from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-4 border-2 border-gray-700 shadow-md text-sm"
+                      >
+                        🔄 Create New
+                      </button>
+                    </div>
+                  </fieldset>
+                )}
               </div>
-            )}
-
-            {capturedImage && (
-              <div className="flex gap-3">
-                <Button
-                  onClick={sendToBackend}
-                  disabled={isLoading}
-                  size="lg"
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold text-lg h-14 shadow-lg disabled:opacity-50"
-                >
-                  <Send className="mr-2 h-5 w-5" />
-                  {isLoading ? 'Generating...' : 'Generate Certificate'}
-                </Button>
-                <Button
-                  onClick={retakePhoto}
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-red-600 text-red-600 hover:bg-red-50 h-14 shadow-lg font-bold"
-                >
-                  <RotateCcw className="mr-2 h-5 w-5" />
-                  Retake
-                </Button>
-              </div>
-            )}
-          </div>
-
-          {/* Status Message */}
-          {message && (
-            <div
-              className={`p-4 rounded-lg text-center font-semibold border-2 ${
-                message.includes('Error') || message.includes('Failed')
-                  ? 'bg-red-50 text-red-700 border-red-300'
-                  : 'bg-green-50 text-green-700 border-green-300'
-              }`}
-            >
-              {message}
             </div>
-          )}
 
-          {/* Footer */}
-          <div className="text-center text-sm text-gray-500 pt-4 border-t">
-            <p>© 2024 Generic Fast Food Corporation</p>
-            <p className="text-xs mt-1">
-              Results may vary. Certificate has no monetary value.
-            </p>
+            {/* Footer */}
+            <div className="mt-4 text-center text-xs text-gray-600 bg-gray-200 border-2 border-gray-400 p-3">
+              <p>
+                © 2002-2024 Generic FastFood Corporation™ | All Rights Reserved
+              </p>
+              <p className="mt-1">
+                <span className="text-blue-700 hover:underline cursor-pointer">
+                  Privacy Policy
+                </span>{' '}
+                |
+                <span className="text-blue-700 hover:underline cursor-pointer ml-1">
+                  Terms of Service
+                </span>{' '}
+                |
+                <span className="text-blue-700 hover:underline cursor-pointer ml-1">
+                  Contact IT Support
+                </span>
+              </p>
+              <p className="mt-2 text-gray-500">
+                Best viewed in Internet Explorer 6.0 or higher at 1024x768
+              </p>
+            </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }
