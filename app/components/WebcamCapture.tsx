@@ -342,10 +342,17 @@ export default function WebcamCapture() {
                         💾 Download Certificate
                       </button>
                       <button
+                        onClick={sendToBackend}
+                        disabled={isLoading}
+                        className="bg-linear-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-2 px-4 border-2 border-orange-700 disabled:border-gray-600 shadow-md text-sm"
+                      >
+                        {isLoading ? '⌛ Processing...' : '🔄 Regenerate'}
+                      </button>
+                      <button
                         onClick={retakePhoto}
                         className="bg-linear-to-b from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-4 border-2 border-gray-700 shadow-md text-sm"
                       >
-                        🔄 Create New
+                        📷 Create New
                       </button>
                     </div>
                   </fieldset>
