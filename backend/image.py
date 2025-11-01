@@ -39,6 +39,9 @@ def generate_appreciation(employee_image_b64: str,
             "Teamwork",
             "Timeliness",
             "Attitude",
+            "Productivity",
+            "Participation",
+            "Dipendability"
         ]
 
     # Decode the base64 image (support data URI)
@@ -83,9 +86,9 @@ def generate_appreciation(employee_image_b64: str,
 
     # Resize employee image to fit
     employee_img = employee_img.resize((300, 300))
-    gold_star = gold_star.resize((100, 100))
+    gold_star = gold_star.resize((150, 150))
 
-    template.paste(gold_star, (500, 300), gold_star)
+    template.paste(gold_star, (450, 270), gold_star)
     # Composite employee image onto template
     template.paste(employee_img, (25, 100), employee_img)
 

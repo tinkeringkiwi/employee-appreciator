@@ -25,7 +25,7 @@ spec:
         - name: app
           # Image published to GHCR by CI. Update tag as appropriate.
           image: ghcr.io/tinkeringkiwi/employee-appreciator:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 3000
