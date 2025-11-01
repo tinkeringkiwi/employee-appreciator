@@ -13,6 +13,7 @@ export default function WebcamCapture() {
   >(null)
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [countdown, setCountdown] = useState<number | null>(null)
 
   const startCamera = async () => {
     try {
@@ -43,6 +44,22 @@ export default function WebcamCapture() {
       videoRef.current.srcObject = null
       setIsCameraOn(false)
     }
+  }
+
+  const startCountdown = () => {
+    let counter = 3
+    setCountdown(counter)
+
+    const interval = setInterval(() => {
+      counter -= 1
+      if (counter > 0) {
+        setCountdown(counter)
+      } else {
+        clearInterval(interval)
+        setCountdown(null)
+        capturePhoto() // actually take the photo
+      }
+    }, 1000)
   }
 
   const capturePhoto = () => {
@@ -223,10 +240,16 @@ export default function WebcamCapture() {
                       ref={videoRef}
                       autoPlay
                       playsInline
-                      className={`w-full object-contain ${
+                      className={`w-full object-cover ${
                         isCameraOn ? 'block' : 'hidden'
                       }`}
                     />
+
+                    {countdown && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white text-6xl font-bold">
+                        {countdown}
+                      </div>
+                    )}
 
                     {capturedImage && (
                       <img
@@ -265,7 +288,7 @@ export default function WebcamCapture() {
                     {isCameraOn && (
                       <div className="flex gap-2">
                         <button
-                          onClick={capturePhoto}
+                          onClick={startCountdown}
                           className="flex-1 bg-linear-to-b from-green-200 to-green-500 hover:from-green-500 hover:to-green-600 text-black font-bold py-2 px-4 border-2 border-green-700 shadow-md text-sm"
                         >
                           📷 Capture Photo
