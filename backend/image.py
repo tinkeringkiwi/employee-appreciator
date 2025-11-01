@@ -41,7 +41,9 @@ def generate_appreciation(employee_image_b64: str,
             "Attitude",
             "Productivity",
             "Participation",
-            "Dipendability"
+            "Dipendability",
+            "Synergy"
+
         ]
 
     # Decode the base64 image (support data URI)
