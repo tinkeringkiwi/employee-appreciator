@@ -140,7 +140,7 @@ export default function WebcamCapture() {
               className="text-2xl text-black font-bold"
               style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.25)' }}
             >
-              Corporate Employee Appreciation Portal™
+              Corporate Employee Appreciation Portal
             </h1>
           </div>
           <div className="text-xs bg-blue-900 px-3 py-1 rounded border border-blue-400">
