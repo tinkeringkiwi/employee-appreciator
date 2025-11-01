@@ -37,6 +37,6 @@ COPY docker/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 # Expose ports used by Next.js and Flask
-EXPOSE 3000 5000
+EXPOSE 3000 8081
 
 CMD ["/usr/local/bin/start.sh"]

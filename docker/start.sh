@@ -5,7 +5,7 @@ set -euo pipefail
 # This script starts both services in the background and waits for any to exit.
 
 echo "Starting backend (Flask)..."
-python /app/backend/main.py &
+cd /app/backend && python main.py &
 BACKEND_PID=$!
 
 echo "Starting frontend (Next.js)..."
