@@ -67,7 +67,7 @@ export default function WebcamCapture() {
 
   const sendToBackend = async (image: string) => {
     setIsLoading(true)
-    setMessage('Generating your Employee of the Month certificate...')
+    setMessage('Generating employee goodwill...')
 
     try {
       const response = await fetch('/api/process-image', {
