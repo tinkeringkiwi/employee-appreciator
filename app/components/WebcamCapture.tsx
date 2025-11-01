@@ -115,15 +115,15 @@ export default function WebcamCapture() {
   return (
     <div className="min-h-screen bg-linear-to-b from-blue-100 via-gray-100 to-blue-50">
       {/* Classic 2000s header bar */}
-      <div className="bg-linear-to-r from-blue-800 to-blue-600 text-white py-2 px-4shadow-md border-b-4 border-yellow-400">
+      <div className="bg-linear-to-b from-blue-50 to-blue-200 text-white py-2 px-4shadow-md border-b-4 border-yellow-400">
         <div className="max-w-6xl mx-auto flex items-center justify-between ">
           <div className="flex items-center gap-3">
             <div className="bg-yellow-400 text-blue-900 font-black px-3 py-1 text-xl border-2 border-yellow-500 shadow-sm">
               ★
             </div>
             <h1
-              className="text-2xl font-bold"
-              style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
+              className="text-2xl text-black font-bold"
+              style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.25)' }}
             >
               Corporate Employee Appreciation Portal™
             </h1>
@@ -160,7 +160,7 @@ export default function WebcamCapture() {
           {/* Left Sidebar */}
           <div className="col-span-3 space-y-4">
             <div className="bg-white border-2 border-gray-400 shadow-md">
-              <div className="bg-linear-to-b from-blue-700 to-blue-600 text-white px-3 py-2 font-bold text-sm border-b-2 border-blue-800">
+              <div className="bg-linear-to-b from-blue-200 to-blue-50 text-black px-3 py-2 font-bold text-sm border-b-2 border-gray-400">
                 Quick Links
               </div>
               <div className="p-3 space-y-1 text-sm">
@@ -218,12 +218,14 @@ export default function WebcamCapture() {
                     Step 1: Capture Photo
                   </legend>
 
-                  <div className="relative border-2 border-gray-500 bg-black max-h-[500px] overflow-hidden">
+                  <div className="relative border-2 border-gray-500 bg-black overflow-hidden">
                     <video
                       ref={videoRef}
                       autoPlay
                       playsInline
-                      className={`w-full ${isCameraOn ? 'block' : 'hidden'}`}
+                      className={`w-full object-contain ${
+                        isCameraOn ? 'block' : 'hidden'
+                      }`}
                     />
 
                     {capturedImage && (
@@ -254,7 +256,7 @@ export default function WebcamCapture() {
                     {!isCameraOn && !capturedImage && (
                       <button
                         onClick={startCamera}
-                        className="w-full bg-linear-to-b from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 px-4 border-2 border-green-700 shadow-md text-sm"
+                        className="w-full bg-linear-to-b from-green-200 to-green-500 hover:from-green-500 hover:to-green-600 text-black font-bold py-2 px-4 border-2 border-green-700 shadow-md text-sm"
                       >
                         ▶ Start Camera
                       </button>
@@ -264,13 +266,13 @@ export default function WebcamCapture() {
                       <div className="flex gap-2">
                         <button
                           onClick={capturePhoto}
-                          className="flex-1 bg-linear-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2 px-4 border-2 border-blue-700 shadow-md text-sm"
+                          className="flex-1 bg-linear-to-b from-green-200 to-green-500 hover:from-green-500 hover:to-green-600 text-black font-bold py-2 px-4 border-2 border-green-700 shadow-md text-sm"
                         >
                           📷 Capture Photo
                         </button>
                         <button
                           onClick={stopCamera}
-                          className="bg-linear-to-b from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-2 px-4 border-2 border-red-700 shadow-md text-sm"
+                          className="bg-linear-to-b from-red-200 to-red-400 hover:from-red-500 hover:to-red-600 text-black font-bold py-2 px-4 border-2 border-red-700 shadow-md text-sm"
                         >
                           ■ Stop
                         </button>
@@ -362,9 +364,7 @@ export default function WebcamCapture() {
 
             {/* Footer */}
             <div className="mt-4 text-center text-xs text-gray-600 bg-gray-200 border-2 border-gray-400 p-3">
-              <p>
-                © 2002 Generic FastFood Corporation™ | All Rights Reserved
-              </p>
+              <p>© 2002 Generic FastFood Corporation™ | All Rights Reserved</p>
               <p className="mt-1">
                 <span className="text-blue-700 hover:underline cursor-pointer">
                   Privacy Policy
