@@ -5,9 +5,11 @@ import base64
 from typing import List, Optional
 
 
-def _load_font(size: int = 48):
+def _load_font(size: int = 48, italic: bool = False):
     """Try to load a truetype font, fall back to default."""
     try:
+        if italic:
+            return ImageFont.truetype("times-italic.ttf", size=size)
         return ImageFont.truetype("times.ttf", size=size)
     except Exception:
         return ImageFont.load_default()
@@ -51,35 +53,51 @@ def generate_appreciation(employee_image_b64: str,
 
     # Open base template
     try:
-        template = Image.open('base.jpg').convert("RGBA")
+        template = Image.open('solid-color.jpg').convert("RGBA")
     except FileNotFoundError:
         raise FileNotFoundError("Template base.jpg not found in working directory")
 
     draw = ImageDraw.Draw(template)
     font = _load_font(size=48)
 
+    font_praise = _load_font(size=40)
+    font_praise_italic = _load_font(size=40, italic=True)
+
     # Title
-    title = "Employee Appreciation Award"
+    title = "Worker Appreciation Award"
     title_color = (0, 0, 0)
     title_position = (25, 25)
     draw.text(title_position, title, fill=title_color, font=font)
 
-    # Pick three random appreciations
-    selected = random.sample(appreciations, min(3, len(appreciations)))
-    for i, item in enumerate(selected, start=1):
-        draw.text((350, 100 + i * 50), item, fill=title_color, font=font)
-
+    
     # Open employee image
     try:
         employee_img = Image.open(io.BytesIO(employee_bytes)).convert("RGBA")
     except Exception:
         raise ValueError("Unable to open employee image from provided bytes")
+    
+    try:
+        gold_star = Image.open('star.png').convert("RGBA")
+    except Exception:
+        print("Warning: gold_star.png not found, proceeding without star image")
 
     # Resize employee image to fit
-    employee_img = employee_img.resize((200, 200))
+    employee_img = employee_img.resize((300, 300))
+    gold_star = gold_star.resize((100, 100))
 
+    template.paste(gold_star, (500, 300), gold_star)
     # Composite employee image onto template
-    template.paste(employee_img, (50, 150), employee_img)
+    template.paste(employee_img, (25, 100), employee_img)
+
+
+    # Pick three random appreciations
+    selected = random.sample(appreciations, min(4, len(appreciations)))
+    for i, item in enumerate(selected, start=1):
+        if random.choice([True, False]):
+            draw.text((350 + random.randint(-50, 50), 25 + i * random.randint(65, 75)), item, fill=title_color, font=font_praise_italic)
+        else:
+            draw.text((350 + random.randint(-50, 50), 25 + i * random.randint(65, 75)), item, fill=title_color, font=font_praise)
+
 
     # Save to bytes
     out_io = io.BytesIO()
