@@ -67,7 +67,7 @@ def generate_appreciation(employee_image_b64: str,
     font_praise_italic = _load_font(size=40, italic=True)
 
     # Title
-    title = "Worker Appreciation Award"
+    title = "Employee Appreciation Award"
     title_color = (0, 0, 0)
     title_position = (25, 25)
     draw.text(title_position, title, fill=title_color, font=font)
@@ -80,7 +80,7 @@ def generate_appreciation(employee_image_b64: str,
         raise ValueError("Unable to open employee image from provided bytes")
     
     try:
-        gold_star = Image.open('star.png').convert("RGBA")
+        gold_star = Image.open('gold-star.png').convert("RGBA")
     except Exception:
         print("Warning: gold_star.png not found, proceeding without star image")
 
@@ -88,7 +88,7 @@ def generate_appreciation(employee_image_b64: str,
     employee_img = employee_img.resize((300, 300))
     gold_star = gold_star.resize((150, 150))
 
-    template.paste(gold_star, (450, 270), gold_star)
+    template.paste(gold_star, (450, 225), gold_star)
     # Composite employee image onto template
     template.paste(employee_img, (25, 100), employee_img)
 
