@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react'
 import { Camera } from 'lucide-react'
-import Image from 'next/image'
 
 export default function WebcamCapture() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -58,16 +57,15 @@ export default function WebcamCapture() {
       if (ctx) {
         ctx.drawImage(video, 0, 0)
         const imageData = canvas.toDataURL('image/jpeg', 0.9)
-        setCapturedImage(imageData)
-        setMessage('Photo captured! Ready to generate your certificate.')
+
+        setCapturedImage(imageData) // ✅ store image for regenerate
         stopCamera()
+        sendToBackend(imageData)
       }
     }
   }
 
-  const sendToBackend = async () => {
-    if (!capturedImage) return
-
+  const sendToBackend = async (image: string) => {
     setIsLoading(true)
     setMessage('Generating your Employee of the Month certificate...')
 
@@ -77,7 +75,7 @@ export default function WebcamCapture() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ image: capturedImage }),
+        body: JSON.stringify({ image }),
       })
 
       const data = await response.json()
@@ -115,10 +113,10 @@ export default function WebcamCapture() {
   return (
     <div className="min-h-screen bg-linear-to-b from-blue-100 via-gray-100 to-blue-50">
       {/* Classic 2000s header bar */}
-      <div className="bg-linear-to-b from-blue-50 to-blue-200 text-white py-2 px-4shadow-md border-b-4 border-yellow-400">
+      <div className="bg-linear-to-b from-blue-50 to-blue-200 text-white py-2 px-4shadow-md border-b-2 border-yellow-400">
         <div className="max-w-6xl mx-auto flex items-center justify-between ">
           <div className="flex items-center gap-3">
-            <div className="bg-yellow-400 text-blue-900 font-black px-3 py-1 text-xl border-2 border-yellow-500 shadow-sm">
+            <div className="bg-yellow-400 text-blue-900 font-black px-3 py-1 text-xl border border-yellow-500 shadow-sm">
               ★
             </div>
             <h1
@@ -136,9 +134,9 @@ export default function WebcamCapture() {
 
       <div className="max-w-6xl mx-auto">
         {/* Navbar */}
-        <div className="bg-gray-200 border-2 border-gray-400 mb-4 shadow-sm">
+        <div className="bg-gray-200 border border-gray-400 mb-4 shadow-sm">
           <div className="flex text-sm font-semibold">
-            <div className="bg-white border-r-2 border-gray-400 px-4 py-2 text-blue-700">
+            <div className="bg-white border-r border-gray-400 px-4 py-2 text-blue-700">
               Home
             </div>
             <div className="border-r-2 border-gray-400 px-4 py-2 hover:bg-gray-300 cursor-pointer">
@@ -217,8 +215,10 @@ export default function WebcamCapture() {
                   <legend className="text-sm font-bold text-gray-700 px-2">
                     Step 1: Capture Photo
                   </legend>
-
-                  <div className="relative border-2 border-gray-500 bg-black overflow-hidden">
+                  <div
+                    className="relative border-2 border-gray-500 bg-black mx-auto
+                max-w-[400px] aspect-4/5 overflow-hidden"
+                  >
                     <video
                       ref={videoRef}
                       autoPlay
@@ -282,7 +282,9 @@ export default function WebcamCapture() {
                     {capturedImage && !generatedCertificate && (
                       <div className="flex gap-2">
                         <button
-                          onClick={sendToBackend}
+                          onClick={() =>
+                            capturedImage && sendToBackend(capturedImage)
+                          }
                           disabled={isLoading}
                           className="flex-1 bg-linear-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-2 px-4 border-2 border-orange-700 disabled:border-gray-600 shadow-md text-sm"
                         >
@@ -339,12 +341,14 @@ export default function WebcamCapture() {
                     <div className="flex gap-2">
                       <button
                         onClick={downloadCertificate}
-                        className="flex-1 bg-linear-to-b from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-2 px-4 border-2 border-purple-700 shadow-md text-sm"
+                        className="flex-1 bg-linear-to-b from-green-200 to-green-500 hover:from-green-500 hover:to-green-600 text-black font-bold py-2 px-4 border-2 border-green-700 shadow-md text-sm"
                       >
                         💾 Download Certificate
                       </button>
                       <button
-                        onClick={sendToBackend}
+                        onClick={() =>
+                          capturedImage && sendToBackend(capturedImage)
+                        }
                         disabled={isLoading}
                         className="bg-linear-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-2 px-4 border-2 border-orange-700 disabled:border-gray-600 shadow-md text-sm"
                       >
