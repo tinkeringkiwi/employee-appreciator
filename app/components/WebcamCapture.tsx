@@ -99,7 +99,7 @@ export default function WebcamCapture() {
 
       if (response.ok) {
         setGeneratedCertificate(data.certificate)
-        setMessage('Certificate generated successfully!')
+        setMessage('Employee goodwill generated!')
       } else {
         setMessage('Error: ' + (data.error || 'Failed to process'))
       }
