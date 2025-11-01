@@ -109,7 +109,7 @@ def generate_appreciation(employee_image_b64: str,
         # JPEG doesn't support alpha; convert to RGB
         canvas = template.convert('RGB')
         save_format = 'JPEG'
-        save_kwargs['quality'] = 85
+        save_kwargs['quality'] = 20
         canvas.save(out_io, format=save_format, **save_kwargs)
     else:
         template.save(out_io, format=output_format)
