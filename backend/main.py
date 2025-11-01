@@ -11,7 +11,9 @@ def appreciate_employee():
     Returns JSON {"image_b64": "<base64>"}
     """
     data = request.get_json()
-    pprint(data)
+    # PPrint only the keys to avoid logging large images
+    pprint(data.keys())
+    
     if not data or 'employee_image' not in data:
         return jsonify({'error': 'employee_image (base64) is required'}), 400
 

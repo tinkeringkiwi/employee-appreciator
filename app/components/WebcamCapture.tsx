@@ -113,10 +113,10 @@ export default function WebcamCapture() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-blue-100 via-gray-100 to-blue-50 p-4">
+    <div className="min-h-screen bg-linear-to-b from-blue-100 via-gray-100 to-blue-50">
       {/* Classic 2000s header bar */}
-      <div className="bg-linear-to-r from-blue-800 to-blue-600 text-white py-2 px-4 mb-4 shadow-md border-b-4 border-yellow-400">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <div className="bg-linear-to-r from-blue-800 to-blue-600 text-white py-2 px-4shadow-md border-b-4 border-yellow-400">
+        <div className="max-w-6xl mx-auto flex items-center justify-between ">
           <div className="flex items-center gap-3">
             <div className="bg-yellow-400 text-blue-900 font-black px-3 py-1 text-xl border-2 border-yellow-500 shadow-sm">
               ★
@@ -125,11 +125,11 @@ export default function WebcamCapture() {
               className="text-2xl font-bold"
               style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
             >
-              FastFood Employee Recognition Portal™
+              Corporate Employee Appreciation Portal™
             </h1>
           </div>
           <div className="text-xs bg-blue-900 px-3 py-1 rounded border border-blue-400">
-            v2.0.1 Beta
+            v0.1.7 Beta
           </div>
         </div>
       </div>
@@ -194,7 +194,7 @@ export default function WebcamCapture() {
                 Did You Know?
               </div>
               <div className="text-xs text-gray-600">
-                Over 50,000 certificates generated since 2002!
+                We appreciate all our employees.
               </div>
             </div>
           </div>
@@ -356,7 +356,7 @@ export default function WebcamCapture() {
             {/* Footer */}
             <div className="mt-4 text-center text-xs text-gray-600 bg-gray-200 border-2 border-gray-400 p-3">
               <p>
-                © 2002-2024 Generic FastFood Corporation™ | All Rights Reserved
+                © 2002 Generic FastFood Corporation™ | All Rights Reserved
               </p>
               <p className="mt-1">
                 <span className="text-blue-700 hover:underline cursor-pointer">
