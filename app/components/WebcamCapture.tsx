@@ -113,7 +113,7 @@ export default function WebcamCapture() {
   return (
     <div className="min-h-screen bg-linear-to-b from-blue-100 via-gray-100 to-blue-50">
       {/* Classic 2000s header bar */}
-      <div className="bg-linear-to-b from-blue-50 to-blue-200 text-white py-2 px-4shadow-md border-b-2 border-yellow-400">
+      <div className="bg-linear-to-b from-blue-50 to-blue-200 text-white py-2 px-4shadow-md">
         <div className="max-w-6xl mx-auto flex items-center justify-between ">
           <div className="flex items-center gap-3">
             <div className="bg-yellow-400 text-blue-900 font-black px-3 py-1 text-xl border border-yellow-500 shadow-sm">
@@ -134,22 +134,26 @@ export default function WebcamCapture() {
 
       <div className="max-w-6xl mx-auto">
         {/* Navbar */}
-        <div className="bg-gray-200 border border-gray-400 mb-4 shadow-sm">
+        <div className="bg-gray-200 border border-gray-400 mb-4 mt-4 shadow-sm">
           <div className="flex text-sm font-semibold">
-            <div className="bg-white border-r border-gray-400 px-4 py-2 text-blue-700">
+            <div className="border-r-2 border-gray-400 px-4 py-2 hover:bg-gray-300 cursor-pointer">
               Home
             </div>
+            
             <div className="border-r-2 border-gray-400 px-4 py-2 hover:bg-gray-300 cursor-pointer">
-              My Certificates
+              My Employment
+            </div>
+            <div className="bg-white border-r-2 border-gray-400 px-4 py-2 text-blue-700">
+              Employee Appreciation
             </div>
             <div className="border-r-2 border-gray-400 px-4 py-2 hover:bg-gray-300 cursor-pointer">
-              Gallery
+              Corporate
             </div>
             <div className="border-r-2 border-gray-400 px-4 py-2 hover:bg-gray-300 cursor-pointer">
-              Help
+              Corporate
             </div>
             <div className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
-              About
+              Help
             </div>
           </div>
         </div>
@@ -205,7 +209,7 @@ export default function WebcamCapture() {
                   Employee Recognition Certificate Generator
                 </h2>
                 <p className="text-xs text-gray-600 mt-1">
-                  Create your official Employee of the Month certificate
+                  Create your official corporate Employee Appreciation Award
                 </p>
               </div>
 
@@ -368,7 +372,7 @@ export default function WebcamCapture() {
 
             {/* Footer */}
             <div className="mt-4 text-center text-xs text-gray-600 bg-gray-200 border-2 border-gray-400 p-3">
-              <p>© 2002 Generic FastFood Corporation™ | All Rights Reserved</p>
+              <p>© 2002 Corporate Intellectual Property Corporation LTD™ | All Rights Reserved</p>
               <p className="mt-1">
                 <span className="text-blue-700 hover:underline cursor-pointer">
                   Privacy Policy
