@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('API route is being triggered')
-
     const { image } = await request.json()
 
     if (!image) {
@@ -28,8 +26,6 @@ export async function POST(request: NextRequest) {
     })
 
     const backendData = await backendResponse.json()
-
-    console.log(backendData)
 
     if (!backendResponse.ok) {
       return NextResponse.json(
