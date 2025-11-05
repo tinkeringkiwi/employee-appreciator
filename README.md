@@ -1,6 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Employee Appreciator
+Generates a beautiful keepsake token of corporate's appreciation of employees. Perfect for christmas gifts or boosting morale around the office when the budget isn't there for a pizza party. 
 
-## Getting Started
+## [Use the Appreciator](https://appreciator.myhackathon.app/)
+
+## Running
+This was a hackathon project and I'm not sure why anyone would want to run it. If you want to run this somewhere for some reason, the easiest way is to build or use the Docker image available at the repo. 
+
+## Development
 
 First, run the development server:
 
@@ -13,6 +19,8 @@ pnpm dev
 # or
 bun dev
 ```
+
+You'll also want to run the Python backend by simply running `cd backend/ && python3 main.py` for the image generation.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
