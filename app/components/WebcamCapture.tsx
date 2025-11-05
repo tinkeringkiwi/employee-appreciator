@@ -99,7 +99,7 @@ export default function WebcamCapture() {
 
       if (response.ok) {
         setGeneratedCertificate(data.certificate)
-        setMessage('Employee goodwill generated!')
+        setMessage('Employee appreciated')
       } else {
         setMessage('Error: ' + (data.error || 'Failed to process'))
       }
@@ -140,7 +140,7 @@ export default function WebcamCapture() {
               className="text-2xl text-black font-bold"
               style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.25)' }}
             >
-              Corporate Employee Appreciation Portal
+              Corporate Employee Portal
             </h1>
           </div>
           <div className="text-xs bg-blue-900 px-3 py-1 rounded border border-blue-400">
@@ -395,7 +395,7 @@ export default function WebcamCapture() {
 
             {/* Footer */}
             <div className="mt-4 text-center text-xs text-gray-600 bg-gray-200 border-2 border-gray-400 p-3">
-              <p>© 2002 Corporate Intellectual Property Corporation LTD™ | All Rights Reserved</p>
+              <p>© 2005 Corporate Intellectual Property Corporation Limited™ | All Rights Reserved</p>
               <p className="mt-1">
                 <span className="text-blue-700 hover:underline cursor-pointer">
                   Privacy Policy

@@ -39,9 +39,9 @@ def generate_appreciation(employee_image_b64: str,
             "Teamwork",
             "Timeliness",
             "Attitude",
-            "Productivity",
+            "Porductivity",
             "Participation",
-            "Dipendability",
+            "Dependability",
             "Synergy"
 
         ]
